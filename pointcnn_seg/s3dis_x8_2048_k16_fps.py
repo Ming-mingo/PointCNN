@@ -5,7 +5,7 @@ num_class = 13
 sample_num = 2048
 
 batch_size = 16
-
+step_val = 500
 num_epochs = 1024
 
 label_weights = []

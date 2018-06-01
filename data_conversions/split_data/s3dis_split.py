@@ -96,7 +96,7 @@ def unpickle(npy_file, out_ori_pts, out_ori_seg,  out_data, out_label, out_trans
             os.makedirs(out_ori_pts + "Area" + Area[-1] + "_data/01")
         if not os.path.exists(out_ori_seg + "Area" + Area[-1] + "_data/01"):
             print(out_ori_seg, "Not Exists! Create", out_ori_seg)
-            os.makedirs(out_ori_pts + "Area" + Area[-1] + "_data/01")
+            os.makedirs(out_ori_seg + "Area" + Area[-1] + "_data/01")
         if not os.path.exists(out_data + "Area" + Area[-1] + "_data/01"):
             print(out_data, "Not Exists! Create", out_data)
             os.makedirs(out_data + "Area" + Area[-1] + "_data/01")

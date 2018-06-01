@@ -40,7 +40,8 @@ def main():
     label_seg_min = sys.maxsize
     for data_folder, label_folder in folders:
         if not os.path.exists(data_folder):
-            continue
+        	  print(data_folder + ' does not exist.')
+        	  continue
         for category in sorted(os.listdir(data_folder)):
             print(category)
             if category not in category_label_seg_max_dict:

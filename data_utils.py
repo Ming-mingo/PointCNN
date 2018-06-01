@@ -1,9 +1,13 @@
+# coding=utf-8
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
+import sys
+import importlib 
+importlib.reload(sys)
 import os
 import h5py
+sys.path.append(os.path.abspath(__file__))
 import plyfile
 import numpy as np
 from matplotlib import cm
@@ -143,7 +147,7 @@ def load_seg(filelist):
     folder = os.path.dirname(filelist)
     for line in open(filelist):
         filename = os.path.basename(line.rstrip())
-        data = h5py.File(os.path.join(folder, filename))
+        data = h5py.File(os.path.join(folder, filename), "r")
         points.append(data['data'][...].astype(np.float32))
         labels.append(data['label'][...].astype(np.int64))
         point_nums.append(data['data_num'][...].astype(np.int32))

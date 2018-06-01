@@ -38,7 +38,7 @@ for Area in path_Dir_Areas:
         #############################
         path_objects = os.listdir(path_Annotations)
         for Object in path_objects:
-            if object_dict.has_key(Object.split("_",1)[0]):
+            if Object.split("_",1)[0] in object_dict:
                 print(Object.split("_",1)[0] + " value:" ,object_dict[Object.split("_",1)[0]])
                 xyz_object = np.loadtxt(os.path.join(path_Annotations,Object))[:,:]#(N,6)
                 label_object = np.tile([object_dict[Object.split("_",1)[0]]],(xyz_object.shape[0],1))#(N,1)

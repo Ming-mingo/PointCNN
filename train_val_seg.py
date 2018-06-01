@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# coding=utf-8
 """Training and Validation On Segmentation Task."""
 
 from __future__ import absolute_import
@@ -7,6 +8,8 @@ from __future__ import print_function
 
 import os
 import sys
+import importlib 
+importlib.reload(sys)
 import math
 import random
 import shutil
@@ -57,16 +60,21 @@ def main():
 
     # Prepare inputs
     print('{}-Preparing datasets...'.format(datetime.now()))
-    is_list_of_h5_list = not data_utils.is_h5_list(args.filelist)
-    if is_list_of_h5_list:
-        seg_list = data_utils.load_seg_list(args.filelist)
-        seg_list_idx = 0
-        filelist_train = seg_list[seg_list_idx]
-        seg_list_idx = seg_list_idx + 1
-    else:
-        filelist_train = args.filelist
-    data_train, _, data_num_train, label_train = data_utils.load_seg(filelist_train)
+    # is_list_of_h5_list = not data_utils.is_h5_list(args.filelist)
+    # print(data_utils.is_h5_list(args.filelist))
+    # print(is_list_of_h5_list)
+    # if is_list_of_h5_list:
+    #     seg_list = data_utils.load_seg_list(args.filelist)
+    #     seg_list_idx = 0
+    #     filelist_train = seg_list[seg_list_idx]
+    #     seg_list_idx = seg_list_idx + 1
+    # else:
+    #     filelist_train = args.filelist
+    print(args.filelist)
+    data_train, _, data_num_train, label_train = data_utils.load_seg(args.filelist)
     data_val, _, data_num_val, label_val = data_utils.load_seg(args.filelist_val)
+    # data_train, _, data_num_train, label_train = data_utils.load_seg(filelist_train)
+    # data_val, _, data_num_val, label_val = data_utils.load_seg(args.filelist_val)
 
     # shuffle
     data_train, data_num_train, label_train = \
@@ -86,7 +94,7 @@ def main():
     indices = tf.placeholder(tf.int32, shape=(None, None, 2), name="indices")
     xforms = tf.placeholder(tf.float32, shape=(None, 3, 3), name="xforms")
     rotations = tf.placeholder(tf.float32, shape=(None, 3, 3), name="rotations")
-    jitter_range = tf.placeholder(tf.float32, shape=(1), name="jitter_range")
+    jitter_range = tf.placeholder(tf.float32, shape=(None, 8, 3), name="jitter_range")
     global_step = tf.Variable(0, trainable=False, name='global_step')
     is_training = tf.placeholder(tf.bool, name='is_training')
 
@@ -165,8 +173,8 @@ def main():
     saver = tf.train.Saver(max_to_keep=None)
 
     # backup all code
-    code_folder = os.path.abspath(os.path.dirname(__file__))
-    shutil.copytree(code_folder, os.path.join(root_folder, os.path.basename(code_folder)))
+    #code_folder = os.path.abspath(os.path.dirname(__file__))
+    #shutil.copytree(code_folder, os.path.join(root_folder, os.path.basename(code_folder)))
 
     folder_ckpt = os.path.join(root_folder, 'ckpts')
     if not os.path.exists(folder_ckpt):
